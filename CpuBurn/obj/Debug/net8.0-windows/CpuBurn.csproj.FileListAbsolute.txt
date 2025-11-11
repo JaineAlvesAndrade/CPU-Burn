@@ -1,0 +1,16 @@
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.Form1.resources
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.csproj.GenerateResource.cache
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.GeneratedMSBuildEditorConfig.editorconfig
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.AssemblyInfoInputs.cache
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.AssemblyInfo.cs
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.csproj.CoreCompileInputs.cache
+P:\repositorios\CpuBurn\CpuBurn\bin\Debug\net8.0-windows\CpuBurn.exe
+P:\repositorios\CpuBurn\CpuBurn\bin\Debug\net8.0-windows\CpuBurn.deps.json
+P:\repositorios\CpuBurn\CpuBurn\bin\Debug\net8.0-windows\CpuBurn.runtimeconfig.json
+P:\repositorios\CpuBurn\CpuBurn\bin\Debug\net8.0-windows\CpuBurn.dll
+P:\repositorios\CpuBurn\CpuBurn\bin\Debug\net8.0-windows\CpuBurn.pdb
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.dll
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\refint\CpuBurn.dll
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.pdb
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\CpuBurn.genruntimeconfig.cache
+P:\repositorios\CpuBurn\CpuBurn\obj\Debug\net8.0-windows\ref\CpuBurn.dll
