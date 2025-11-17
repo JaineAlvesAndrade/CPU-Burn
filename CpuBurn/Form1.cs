@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace CpuBurn
 {
@@ -10,8 +8,7 @@ namespace CpuBurn
         private bool _isBurning = false;
         private readonly PerformanceCounter _cpuCounter;
         private readonly PerformanceCounter _gpuCounter;
-        private readonly PerformanceCounter _diskCounter;
-        private readonly PerformanceCounter _memoryCounter;
+        private readonly List<PerformanceCounter> _gpuCounters = new();
         private readonly System.Windows.Forms.Timer _timer;
 
         public Form1()
@@ -19,10 +16,27 @@ namespace CpuBurn
             InitializeComponent();
 
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            _diskCounter = new PerformanceCounter("PhysicalDisk", "% Idle Time", "_Total");
-            _memoryCounter = new PerformanceCounter("Memory", "% Committed Bytes In Use");
             _gpuCounter = new PerformanceCounter("GPU Engine", "Utilization Percentage");
+            
+            try
+            {
+                var category = new PerformanceCounterCategory("GPU Engine");
+                var instances = category.GetInstanceNames();
 
+                foreach (var name in instances)
+                {
+                    if (name.Contains("engtype_3D", StringComparison.OrdinalIgnoreCase))
+                    {
+                        _gpuCounters.Add(
+                            new PerformanceCounter("GPU Engine", "Utilization Percentage", name)
+                        );
+                    }
+                }
+            }
+            catch
+            {
+                // se não tiver categoria GPU Engine, deixa lista vazia
+            }
             _timer = new System.Windows.Forms.Timer();
             _timer.Interval = 1000;
             _timer.Tick += Timer_Tick;
@@ -53,8 +67,6 @@ namespace CpuBurn
 
                 bool cpuSelecionado = false;
                 bool gpuSelecionado = false;
-                bool discoSelecionado = false;
-                bool memoriaSelecionado = false;
 
                 for (int i = 0; i < checkedListBox1.Items.Count; i++)
                 {
@@ -85,16 +97,6 @@ namespace CpuBurn
                     tasks.Add(GpuBurn.BurnFullAsync(_cancellationTokenSource.Token, percentual));
                 }
 
-                if (memoriaSelecionado)
-                {
-                    tasks.Add(MemoryBurn.BurnFullAsync(_cancellationTokenSource.Token, percentual, 2045));
-                }
-
-                if (discoSelecionado)
-                {
-                    tasks.Add(DiskBurn.BurnFullAsync(_cancellationTokenSource.Token, @"C:\Users\helen\Documents\IISExpress", percentual));
-                }
-
                 await Task.WhenAll(tasks);
             }
             catch (OperationCanceledException)
@@ -121,17 +123,33 @@ namespace CpuBurn
             try
             {
                 float cpuUsage = _cpuCounter.NextValue();
-                float gpuUsage = 0;
-                float diskUsage = _diskCounter.NextValue();
-                float memoryUsage = _memoryCounter.NextValue();
                 labelCpu.Text = $"CPU: {cpuUsage:F1}%";
-                labelDisk.Text = $"Disco: {diskUsage:F1}%";
-                labelGpu.Text = $"GPU: {gpuUsage:F1}%";
-                labelMemory.Text = $"Memória: {memoryUsage:F1}%";
             }
             catch (Exception ex)
             {
                 labelCpu.Text = $"Erro ao ler: {ex.Message} \n {ex.StackTrace}";
+            }
+
+            try
+            {
+                if (_gpuCounters.Count > 0)
+                {
+                    float total3D = 0;
+                    foreach (var c in _gpuCounters)
+                    {
+                        total3D += c.NextValue();
+                    }
+
+                    labelGpu.Text = $"GPU (3D): {total3D:F1}%";
+                }
+                else
+                {
+                    labelGpu.Text = "GPU (3D): não disponível";
+                }
+            }
+            catch (Exception ex)
+            {
+                labelGpu.Text = $"GPU (3D): erro ({ex.Message})";
             }
         }
 

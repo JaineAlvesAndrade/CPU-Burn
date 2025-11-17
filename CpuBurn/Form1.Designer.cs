@@ -39,8 +39,6 @@
             label2 = new Label();
             labelGpu = new Label();
             labelCpu = new Label();
-            labelDisk = new Label();
-            labelMemory = new Label();
             ((System.ComponentModel.ISupportInitialize)trackerUso).BeginInit();
             SuspendLayout();
             // 
@@ -91,7 +89,7 @@
             // checkedListBox1
             // 
             checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Items.AddRange(new object[] { "GPU", "CPU", "Disco", "Memória" });
+            checkedListBox1.Items.AddRange(new object[] { "GPU", "CPU" });
             checkedListBox1.Location = new Point(62, 152);
             checkedListBox1.Margin = new Padding(3, 4, 3, 4);
             checkedListBox1.Name = "checkedListBox1";
@@ -141,33 +139,11 @@
             labelCpu.TabIndex = 9;
             labelCpu.Text = "CPU:";
             // 
-            // labelDisk
-            // 
-            labelDisk.AutoSize = true;
-            labelDisk.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelDisk.Location = new Point(515, 188);
-            labelDisk.Name = "labelDisk";
-            labelDisk.Size = new Size(49, 20);
-            labelDisk.TabIndex = 10;
-            labelDisk.Text = "Disco:";
-            // 
-            // labelMemory
-            // 
-            labelMemory.AutoSize = true;
-            labelMemory.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelMemory.Location = new Point(515, 208);
-            labelMemory.Name = "labelMemory";
-            labelMemory.Size = new Size(72, 20);
-            labelMemory.TabIndex = 11;
-            labelMemory.Text = "Memória:";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 451);
-            Controls.Add(labelMemory);
-            Controls.Add(labelDisk);
             Controls.Add(labelCpu);
             Controls.Add(labelGpu);
             Controls.Add(label2);
@@ -196,7 +172,5 @@
         private Label label2;
         private Label labelGpu;
         private Label labelCpu;
-        private Label labelDisk;
-        private Label labelMemory;
     }
 }
