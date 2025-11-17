@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CpuBurn
 {
@@ -8,6 +9,9 @@ namespace CpuBurn
         private CancellationTokenSource? _cancellationTokenSource;
         private bool _isBurning = false;
         private readonly PerformanceCounter _cpuCounter;
+        private readonly PerformanceCounter _gpuCounter;
+        private readonly PerformanceCounter _diskCounter;
+        private readonly PerformanceCounter _memoryCounter;
         private readonly System.Windows.Forms.Timer _timer;
 
         public Form1()
@@ -15,6 +19,9 @@ namespace CpuBurn
             InitializeComponent();
 
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            _diskCounter = new PerformanceCounter("PhysicalDisk", "% Idle Time", "_Total");
+            _memoryCounter = new PerformanceCounter("Memory", "% Committed Bytes In Use");
+            _gpuCounter = new PerformanceCounter("GPU Engine", "Utilization Percentage");
 
             _timer = new System.Windows.Forms.Timer();
             _timer.Interval = 1000;
@@ -47,6 +54,7 @@ namespace CpuBurn
                 bool cpuSelecionado = false;
                 bool gpuSelecionado = false;
                 bool discoSelecionado = false;
+                bool memoriaSelecionado = false;
 
                 for (int i = 0; i < checkedListBox1.Items.Count; i++)
                 {
@@ -77,10 +85,16 @@ namespace CpuBurn
                     tasks.Add(GpuBurn.BurnFullAsync(_cancellationTokenSource.Token, percentual));
                 }
 
+                if (memoriaSelecionado)
+                {
+                    tasks.Add(MemoryBurn.BurnFullAsync(_cancellationTokenSource.Token, percentual, 2045));
+                }
+
                 if (discoSelecionado)
                 {
                     tasks.Add(DiskBurn.BurnFullAsync(_cancellationTokenSource.Token, @"C:\Users\helen\Documents\IISExpress", percentual));
                 }
+
                 await Task.WhenAll(tasks);
             }
             catch (OperationCanceledException)
@@ -107,15 +121,31 @@ namespace CpuBurn
             try
             {
                 float cpuUsage = _cpuCounter.NextValue();
-                UsoCpu.Text = $"Uso atual: {cpuUsage:F1}%";
+                float gpuUsage = 0;
+                float diskUsage = _diskCounter.NextValue();
+                float memoryUsage = _memoryCounter.NextValue();
+                labelCpu.Text = $"CPU: {cpuUsage:F1}%";
+                labelDisk.Text = $"Disco: {diskUsage:F1}%";
+                labelGpu.Text = $"GPU: {gpuUsage:F1}%";
+                labelMemory.Text = $"Memória: {memoryUsage:F1}%";
             }
             catch (Exception ex)
             {
-                UsoCpu.Text = $"Erro ao ler CPU: {ex.Message}";
+                labelCpu.Text = $"Erro ao ler: {ex.Message} \n {ex.StackTrace}";
             }
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
