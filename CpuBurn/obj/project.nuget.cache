@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "89IKKmuw2zM=",
+  "dgSpecHash": "8psFf7herhg=",
   "success": true,
-  "projectFilePath": "P:\\repositorios\\CpuBurn\\CpuBurn\\CpuBurn.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\User\\Source\\Repos\\CPU-Burn\\CpuBurn\\CpuBurn.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\User\\.nuget\\packages\\ilgpu\\1.5.3\\ilgpu.1.5.3.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\ilgpu.algorithms\\1.5.3\\ilgpu.algorithms.1.5.3.nupkg.sha512"
+  ],
   "logs": []
 }

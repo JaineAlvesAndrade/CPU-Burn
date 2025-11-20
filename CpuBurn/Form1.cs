@@ -14,10 +14,11 @@ namespace CpuBurn
         public Form1()
         {
             InitializeComponent();
+            InitializeCoresListBox();
 
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             _gpuCounter = new PerformanceCounter("GPU Engine", "Utilization Percentage");
-            
+
             try
             {
                 var category = new PerformanceCounterCategory("GPU Engine");
@@ -43,6 +44,15 @@ namespace CpuBurn
             _timer.Start();
         }
 
+        private void InitializeCoresListBox()
+        {
+            int cores = Environment.ProcessorCount;
+            for (int i = 0; i < cores; i++)
+            {
+                _coresSelection.Items.Add($"Núcleo {i + 1}", true);
+            }
+        }
+
         private async void button1_Click(object sender, EventArgs e)
         {
             if (_isBurning)
@@ -63,7 +73,7 @@ namespace CpuBurn
 
             try
             {
-                var tasks = new List<Task>();
+                IList<Task> tasks = new List<Task>();
 
                 bool cpuSelecionado = false;
                 bool gpuSelecionado = false;
@@ -77,9 +87,13 @@ namespace CpuBurn
                         continue;
 
                     if (texto.Equals("CPU", StringComparison.OrdinalIgnoreCase))
+                    {
                         cpuSelecionado = true;
+                    }
                     else if (texto.Equals("GPU", StringComparison.OrdinalIgnoreCase))
+                    {
                         gpuSelecionado = true;
+                    }
                 }
 
                 if (!cpuSelecionado && !gpuSelecionado)
@@ -87,9 +101,10 @@ namespace CpuBurn
                     cpuSelecionado = true;
                 }
 
+                int[] selectedCores = GetSelectedCores();
                 if (cpuSelecionado)
                 {
-                    tasks.Add(CpuBurn.BurnFullAsync(_cancellationTokenSource.Token, percentual));
+                    tasks.Add(CpuBurn.BurnFullAsync(_cancellationTokenSource.Token, percentual, selectedCores));
                 }
 
                 if (gpuSelecionado)
@@ -111,6 +126,21 @@ namespace CpuBurn
                 _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = null;
             }
+        }
+
+        private int[] GetSelectedCores()
+        {
+            List<int> selectedCores = new List<int>();
+
+            for (int i = 0; i < _coresSelection.Items.Count; i++)
+            {
+                if (_coresSelection.GetItemChecked(i))
+                {
+                    selectedCores.Add(i);
+                }
+            }
+
+            return selectedCores.ToArray();
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -164,6 +194,21 @@ namespace CpuBurn
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UsoCpu_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

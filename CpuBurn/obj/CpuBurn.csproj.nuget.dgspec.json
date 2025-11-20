@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "P:\\repositorios\\CpuBurn\\CpuBurn\\CpuBurn.csproj": {}
+    "C:\\Users\\User\\Source\\Repos\\CPU-Burn\\CpuBurn\\CpuBurn.csproj": {}
   },
   "projects": {
-    "P:\\repositorios\\CpuBurn\\CpuBurn\\CpuBurn.csproj": {
+    "C:\\Users\\User\\Source\\Repos\\CPU-Burn\\CpuBurn\\CpuBurn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "P:\\repositorios\\CpuBurn\\CpuBurn\\CpuBurn.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Source\\Repos\\CPU-Burn\\CpuBurn\\CpuBurn.csproj",
         "projectName": "CpuBurn",
-        "projectPath": "P:\\repositorios\\CpuBurn\\CpuBurn\\CpuBurn.csproj",
-        "packagesPath": "C:\\Users\\joaov\\.nuget\\packages\\",
-        "outputPath": "P:\\repositorios\\CpuBurn\\CpuBurn\\obj\\",
+        "projectPath": "C:\\Users\\User\\Source\\Repos\\CPU-Burn\\CpuBurn\\CpuBurn.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Source\\Repos\\CPU-Burn\\CpuBurn\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "P:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\joaov\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -50,6 +45,16 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "ILGPU": {
+              "target": "Package",
+              "version": "[1.5.3, )"
+            },
+            "ILGPU.Algorithms": {
+              "target": "Package",
+              "version": "[1.5.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

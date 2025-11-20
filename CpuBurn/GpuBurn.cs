@@ -24,7 +24,9 @@ namespace CpuBurn
         public static Task BurnFullAsync(CancellationToken cancellationToken, int percentual)
         {
             if (percentual < 0 || percentual > 100)
+            {
                 throw new ArgumentOutOfRangeException(nameof(percentual));
+            }
 
             const int periodMs = 100;
             int busyMs = (int)Math.Round(periodMs * (percentual / 100.0));

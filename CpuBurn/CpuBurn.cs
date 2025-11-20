@@ -1,23 +1,51 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace CpuBurn
 {
     public class CpuBurn
     {
-        public static Task BurnFullAsync(CancellationToken cancellationToken, int percentual)
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetCurrentThread();
+
+        [DllImport("kernel32.dll")]
+        static extern UIntPtr SetThreadAffinityMask(IntPtr hThread, UIntPtr dwThreadAffinityMask);
+
+        public static Task BurnFullAsync(CancellationToken cancellationToken, int percentual, int[]? selectedCores = null)
         {
             if (percentual < 0 || percentual > 100)
             {
                 throw new ArgumentOutOfRangeException(nameof(percentual));
             }
 
-            int cores = Environment.ProcessorCount;
-            Task[] tasks = new Task[cores];
+            int totalCores = Environment.ProcessorCount;
 
-            for (int i = 0; i < cores; i++)
+            if (selectedCores == null || selectedCores.Length == 0)
             {
-                tasks[i] = Task.Run(() =>
+                selectedCores = Enumerable.Range(0, totalCores).ToArray();
+            }
+
+            foreach (int core in selectedCores)
+            {
+                if (core < 0 || core >= totalCores)
                 {
+                    throw new ArgumentOutOfRangeException(nameof(selectedCores), $"Core {core} is invalid. Must be between 0 and {totalCores - 1}.");
+                }
+            }
+
+            TaskCompletionSource<bool>[] tasks = new TaskCompletionSource<bool>[selectedCores.Length];
+
+            for (int i = 0; i < selectedCores.Length; i++)
+            {
+                int currentCore = selectedCores[i];
+
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+                tasks[i] = tcs;
+
+                Thread th = new Thread(() =>
+                {
+                    SetAffinity(currentCore);
+
                     Stopwatch sw = new();
 
                     while (!cancellationToken.IsCancellationRequested)
@@ -36,10 +64,24 @@ namespace CpuBurn
                             Thread.Sleep(sleepMs);
                         }
                     }
-                }, cancellationToken);
+
+                    tcs.TrySetResult(true);
+                });
+
+                th.IsBackground = true;
+                th.Start();
             }
 
-            return Task.WhenAll(tasks);
+            return Task.WhenAll(tasks.Select(t => t.Task));
+        }
+
+        static void SetAffinity(int cpuIndex)
+        {
+            IntPtr handle = GetCurrentThread();
+
+            UIntPtr mask = (UIntPtr)(1 << cpuIndex);
+
+            UIntPtr result = SetThreadAffinityMask(handle, mask);
         }
     }
 }
