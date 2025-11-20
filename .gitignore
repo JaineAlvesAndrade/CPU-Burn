@@ -1,0 +1,140 @@
+## ------------------------------
+## .NET / C# .gitignore padrão
+## ------------------------------
+
+# Compilação
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+# Ferramentas
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Pacotes
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+*.psess
+*.vsp
+*.vspx
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.backup
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+*.orig
+*.cache
+*.pdb
+
+# Testes
+TestResults/
+*.coverage
+*.coveragexml
+
+# Publicação
+publish/
+dist/
+artifacts/
+wwwroot/
+
+# Configurações locais
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
+secrets.json
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Rider / JetBrains
+.idea/
+*.iml
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Entity Framework
+migrations/
+Migrations/
+
+# Arquivos do usuário (ex: senhas, configs locais)
+*.userprefs
+
+# .NET MAUI / Xamarin
+*.apk
+*.aab
+*.ap_
+*.ipa
+*.app
+*.xcuserstate
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/xcshareddata/*
+*.xcworkspace/
+*.xcuserstate
+*.crash
+*.mtb
+*.dSYM
+
+# Build do Android/iOS
+*.keystore
+*.keyset
+*.cer
+*.p12
+*.mobileprovision
+
+# Outros
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej
+
+# Arquivos do NuGet
+project.lock.json
+nuget.exe
+*.nuget.props
+*.nuget.targets
+
+# Arquivos de publicação temporários
+PublishProfiles/
+*.publishsettings
+
+# Arquivos gerados por ferramentas
+*.dbmdl
+*.bak
+*.sqlproj
+*.dbproj
+
+# Arquivos de cache do Visual Studio
+.vs/
+.vscode/
+.vsconfig
+
+# Arquivos de cobertura de código
+coverage/
+coverage*.json
+coverage*.xml
+lcov.info
+
+# Pasta de logs
+logs/
