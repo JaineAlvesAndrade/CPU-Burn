@@ -1,9 +1,11 @@
-﻿using ILGPU;
-using ILGPU.Runtime;
-using System;
+﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using ILGPU;
 using ILGPU.Algorithms;
+using ILGPU.Runtime;
 
 namespace CpuBurn
 {
@@ -24,9 +26,7 @@ namespace CpuBurn
         public static Task BurnFullAsync(CancellationToken cancellationToken, int percentual)
         {
             if (percentual < 0 || percentual > 100)
-            {
                 throw new ArgumentOutOfRangeException(nameof(percentual));
-            }
 
             const int periodMs = 100;
             int busyMs = (int)Math.Round(periodMs * (percentual / 100.0));
@@ -37,8 +37,10 @@ namespace CpuBurn
                 using var context = Context.CreateDefault();
 
                 var device = context.Devices
-                    .Where(d => d.AcceleratorType == AcceleratorType.Cuda || d.AcceleratorType == AcceleratorType.OpenCL)
-                    .OrderByDescending(d => d.AcceleratorType == AcceleratorType.Cuda) 
+                    .Where(d =>
+                        d.AcceleratorType == AcceleratorType.Cuda ||
+                        d.AcceleratorType == AcceleratorType.OpenCL)
+                    .OrderByDescending(d => d.AcceleratorType == AcceleratorType.Cuda)
                     .FirstOrDefault();
 
                 if (device == null)
@@ -46,16 +48,13 @@ namespace CpuBurn
 
                 using var accelerator = device.CreateAccelerator(context);
 
-                // Escolhe um tamanho de grid razoável
                 int length = accelerator.MaxNumThreadsPerGroup * accelerator.NumMultiprocessors;
                 if (length <= 0)
-                    length = 1024; // fallback
+                    length = 1024;
 
-                // Compila kernel
                 var burnKernel = accelerator
                     .LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>>(BurnKernel);
 
-                // Aloca buffer na GPU
                 using var buffer = accelerator.Allocate1D<float>(length);
 
                 var sw = new Stopwatch();
@@ -64,26 +63,24 @@ namespace CpuBurn
                 {
                     while (!cancellationToken.IsCancellationRequested)
                     {
-                        // Parte "ocupada": lança kernel repetidamente por busyMs
                         sw.Restart();
+
                         while (sw.ElapsedMilliseconds < busyMs &&
                                !cancellationToken.IsCancellationRequested)
                         {
                             burnKernel(length, buffer.View);
-                            accelerator.Synchronize(); // garante que terminou
+                            accelerator.Synchronize();
                         }
 
-                        // Parte "descanso": tenta se aproximar do percentual
                         if (sleepMs > 0)
                         {
                             try
                             {
                                 await Task.Delay(sleepMs, cancellationToken)
-                                          .ConfigureAwait(false);
+                                    .ConfigureAwait(false);
                             }
                             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
                             {
-                                // cancelado durante o delay, só sair
                                 break;
                             }
                         }
@@ -91,10 +88,8 @@ namespace CpuBurn
                 }
                 catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
                 {
-                    // cancel normal
                 }
             }, cancellationToken);
         }
-
     }
 }

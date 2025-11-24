@@ -47,9 +47,10 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.Location = new Point(315, 163);
+            button1.Location = new Point(276, 122);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(141, 77);
+            button1.Size = new Size(123, 58);
             button1.TabIndex = 0;
             button1.Text = "Começar";
             button1.UseVisualStyleBackColor = true;
@@ -57,10 +58,11 @@
             // 
             // trackerUso
             // 
-            trackerUso.Location = new Point(131, 316);
+            trackerUso.Location = new Point(115, 237);
+            trackerUso.Margin = new Padding(3, 2, 3, 2);
             trackerUso.Maximum = 100;
             trackerUso.Name = "trackerUso";
-            trackerUso.Size = new Size(517, 56);
+            trackerUso.Size = new Size(452, 45);
             trackerUso.TabIndex = 1;
             trackerUso.Scroll += trackBar1_Scroll;
             // 
@@ -68,9 +70,9 @@
             // 
             percentualUso.AutoSize = true;
             percentualUso.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            percentualUso.Location = new Point(368, 279);
+            percentualUso.Location = new Point(322, 209);
             percentualUso.Name = "percentualUso";
-            percentualUso.Size = new Size(26, 31);
+            percentualUso.Size = new Size(22, 25);
             percentualUso.TabIndex = 3;
             percentualUso.Text = "0";
             // 
@@ -82,9 +84,9 @@
             // 
             UsoCpu.AutoSize = true;
             UsoCpu.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            UsoCpu.Location = new Point(284, 47);
+            UsoCpu.Location = new Point(248, 35);
             UsoCpu.Name = "UsoCpu";
-            UsoCpu.Size = new Size(172, 41);
+            UsoCpu.Size = new Size(138, 32);
             UsoCpu.TabIndex = 4;
             UsoCpu.Text = "LET'S BURN";
             UsoCpu.Click += UsoCpu_Click;
@@ -93,19 +95,18 @@
             // 
             checkedListBox1.FormattingEnabled = true;
             checkedListBox1.Items.AddRange(new object[] { "GPU", "CPU" });
-            checkedListBox1.Location = new Point(62, 187);
-            checkedListBox1.Margin = new Padding(3, 4, 3, 4);
+            checkedListBox1.Location = new Point(54, 140);
             checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(137, 48);
+            checkedListBox1.Size = new Size(120, 40);
             checkedListBox1.TabIndex = 5;
             checkedListBox1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
             // 
             // label1
             // 
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(62, 141);
+            label1.Location = new Point(54, 106);
             label1.Name = "label1";
-            label1.Size = new Size(206, 43);
+            label1.Size = new Size(180, 32);
             label1.TabIndex = 6;
             label1.Text = "Selecione o que você deseja estressar:";
             label1.Click += label1_Click;
@@ -114,9 +115,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(531, 156);
+            label2.Location = new Point(465, 117);
             label2.Name = "label2";
-            label2.Size = new Size(58, 28);
+            label2.Size = new Size(47, 21);
             label2.TabIndex = 7;
             label2.Text = "Usos:";
             label2.Click += label2_Click;
@@ -125,9 +126,9 @@
             // 
             labelGpu.AutoSize = true;
             labelGpu.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelGpu.Location = new Point(531, 187);
+            labelGpu.Location = new Point(465, 140);
             labelGpu.Name = "labelGpu";
-            labelGpu.Size = new Size(40, 20);
+            labelGpu.Size = new Size(33, 15);
             labelGpu.TabIndex = 8;
             labelGpu.Text = "GPU:";
             // 
@@ -135,35 +136,36 @@
             // 
             labelCpu.AutoSize = true;
             labelCpu.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelCpu.Location = new Point(531, 207);
+            labelCpu.Location = new Point(465, 155);
             labelCpu.Name = "labelCpu";
-            labelCpu.Size = new Size(39, 20);
+            labelCpu.Size = new Size(33, 15);
             labelCpu.TabIndex = 9;
             labelCpu.Text = "CPU:";
             // 
             // _coresSelection
             // 
             _coresSelection.FormattingEnabled = true;
-            _coresSelection.Location = new Point(62, 435);
+            _coresSelection.Location = new Point(54, 326);
+            _coresSelection.Margin = new Padding(3, 2, 3, 2);
             _coresSelection.Name = "_coresSelection";
-            _coresSelection.Size = new Size(264, 114);
+            _coresSelection.Size = new Size(232, 76);
             _coresSelection.TabIndex = 10;
             _coresSelection.SelectedIndexChanged += checkedListBox2_SelectedIndexChanged;
             // 
             // label3
             // 
-            label3.Location = new Point(63, 387);
+            label3.Location = new Point(55, 290);
             label3.Name = "label3";
-            label3.Size = new Size(263, 41);
+            label3.Size = new Size(230, 31);
             label3.TabIndex = 11;
             label3.Text = "Selecione os núcleos da CPU a serem estressados:";
             label3.Click += label3_Click;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(761, 584);
+            ClientSize = new Size(666, 438);
             Controls.Add(label3);
             Controls.Add(_coresSelection);
             Controls.Add(labelCpu);
@@ -175,6 +177,7 @@
             Controls.Add(percentualUso);
             Controls.Add(trackerUso);
             Controls.Add(button1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)trackerUso).EndInit();
